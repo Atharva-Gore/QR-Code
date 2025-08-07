@@ -1,44 +1,42 @@
 import jsQR from "https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.mjs";
 
-// QR Generator
+// Generate QR Code
 window.generateQR = function () {
   const input = document.getElementById("qrInput").value;
   const canvas = document.getElementById("qrCanvas");
   const downloadLink = document.getElementById("downloadLink");
 
-  if (!input) return alert("Enter text to generate QR!");
+  if (!input) return alert("Please enter text to generate QR!");
 
   QRCode.toCanvas(canvas, input, { width: 200 }, (error) => {
-    if (error) console.error(error);
-    else {
-      downloadLink.href = canvas.toDataURL();
-      downloadLink.style.display = "block";
+    if (error) {
+      console.error("QR Error:", error);
+    } else {
+      const imageURL = canvas.toDataURL("image/png");
+      downloadLink.href = imageURL;
+      downloadLink.style.display = "inline-block";
     }
   });
 };
 
-// QR Scanner
+// Scan QR Code from Webcam
 const video = document.getElementById("video");
 const scanCanvas = document.getElementById("scanCanvas");
+const ctx = scanCanvas.getContext("2d");
 const scanResult = document.getElementById("scanResult");
 
-const ctx = scanCanvas.getContext("2d");
-
-// Access camera
 navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-  .then(stream => {
+  .then((stream) => {
     video.srcObject = stream;
-    video.setAttribute("playsinline", true);
     video.play();
-    requestAnimationFrame(scanFrame);
+    requestAnimationFrame(scanLoop);
   })
-  .catch(err => {
-    console.error("Camera error:", err);
+  .catch((err) => {
+    console.error("Camera Error:", err);
     scanResult.textContent = "❌ Cannot access camera.";
   });
 
-// Scan logic
-function scanFrame() {
+function scanLoop() {
   if (video.readyState === video.HAVE_ENOUGH_DATA) {
     scanCanvas.width = video.videoWidth;
     scanCanvas.height = video.videoHeight;
@@ -51,5 +49,5 @@ function scanFrame() {
       scanResult.textContent = `✅ Scanned: ${code.data}`;
     }
   }
-  requestAnimationFrame(scanFrame);
+  requestAnimationFrame(scanLoop);
 }
