@@ -9,26 +9,23 @@
 </head>
 <body>
   <div class="container">
-    <h1>🔳 QR Code Generator & Scanner</h1>
+    <h1>QR Code Generator & Scanner</h1>
 
-    <section class="generator">
-      <h2>Generate QR Code</h2>
+    <section>
       <input type="text" id="qrInput" placeholder="Enter text or URL" />
       <button onclick="generateQR()">Generate</button>
       <canvas id="qrCanvas"></canvas>
-      <a id="downloadLink" style="display: none;" download="qr-code.png">⬇️ Download QR Code</a>
+      <a id="downloadLink" download="qr-code.png" style="display:none;">Download</a>
     </section>
 
-    <hr />
-
-    <section class="scanner">
-      <h2>Scan QR Code</h2>
+    <section>
       <video id="video" autoplay></video>
       <canvas id="scanCanvas" hidden></canvas>
-      <p id="scanResult">📷 Waiting for scan...</p>
+      <p id="scanResult">Waiting for QR scan...</p>
     </section>
   </div>
 
-  <script src="script.js" type="module"></script>
+  <!-- ✅ use type=module -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
