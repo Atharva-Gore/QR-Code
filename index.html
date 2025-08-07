@@ -11,21 +11,23 @@
   <div class="container">
     <h1>QR Code Generator & Scanner</h1>
 
-    <section>
+    <section class="generator">
       <input type="text" id="qrInput" placeholder="Enter text or URL" />
       <button onclick="generateQR()">Generate</button>
       <canvas id="qrCanvas"></canvas>
-      <a id="downloadLink" download="qr-code.png" style="display:none;">Download</a>
+      <a id="downloadLink" download="qr-code.png" style="display: none;">Download QR</a>
     </section>
 
-    <section>
-      <video id="video" autoplay></video>
+    <hr />
+
+    <section class="scanner">
+      <video id="video" autoplay playsinline></video>
       <canvas id="scanCanvas" hidden></canvas>
       <p id="scanResult">Waiting for QR scan...</p>
     </section>
   </div>
 
-  <!-- ✅ use type=module -->
+  <!-- Important: type="module" to support jsQR -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
